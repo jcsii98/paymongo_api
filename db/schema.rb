@@ -10,41 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_25_052838) do
-  create_table "entrances", force: :cascade do |t|
-    t.string "entrance_name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
+ActiveRecord::Schema[7.0].define(version: 2023_11_25_052835) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "slots", force: :cascade do |t|
-    t.integer "distance_tuple", null: false
+    t.jsonb "distance_hash", default: {}, null: false
+    t.string "slot_type"
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "tickets", force: :cascade do |t|
-    t.integer "vehicle_id", null: false
-    t.integer "slot_id", null: false
-    t.string "entrance_id"
+    t.string "vehicle_plate"
+    t.string "vehicle_type"
+    t.string "entrance"
+    t.string "slot_id"
     t.datetime "time_in"
     t.datetime "time_out"
     t.integer "amount"
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["slot_id"], name: "index_tickets_on_slot_id"
-    t.index ["vehicle_id"], name: "index_tickets_on_vehicle_id"
   end
 
-  create_table "vehicles", force: :cascade do |t|
-    t.string "vehicle_type"
-    t.string "vehicle_plate"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_foreign_key "tickets", "slots"
-  add_foreign_key "tickets", "vehicles"
 end

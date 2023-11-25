@@ -1,11 +1,11 @@
 class CreateTickets < ActiveRecord::Migration[7.0]
   def change
     create_table :tickets do |t|
-      t.references :vehicle, null: false, foreign_key: true
-      t.references :slot, null: false, foreign_key: true
+      t.string :vehicle_plate
+      t.string :vehicle_type
 
-
-      t.string :entrance_id
+      t.string :entrance
+      t.string :slot_id
       t.datetime :time_in
       t.datetime :time_out
       t.integer :amount

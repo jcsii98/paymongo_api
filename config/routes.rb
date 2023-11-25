@@ -3,4 +3,15 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
+
+  get '/test_api', to: 'test#test_api'
+
+  resources :slots do
+    collection do
+      delete 'destroy_map'
+    end
+  end
+
+  resources :tickets
+  
 end

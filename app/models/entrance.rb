@@ -1,2 +1,0 @@
-class Entrance < ApplicationRecord
-end

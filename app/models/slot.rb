@@ -1,2 +1,3 @@
 class Slot < ApplicationRecord
+    
 end
