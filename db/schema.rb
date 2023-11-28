@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_25_052835) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_26_155113) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -26,13 +26,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_25_052835) do
     t.string "vehicle_plate"
     t.string "vehicle_type"
     t.string "entrance"
-    t.string "slot_id"
     t.datetime "time_in"
     t.datetime "time_out"
     t.integer "amount"
-    t.string "status"
+    t.string "status", default: "pending", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "slot_id"
+    t.index ["slot_id"], name: "index_tickets_on_slot_id"
   end
 
+  add_foreign_key "tickets", "slots"
 end

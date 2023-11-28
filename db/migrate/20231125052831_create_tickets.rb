@@ -5,11 +5,10 @@ class CreateTickets < ActiveRecord::Migration[7.0]
       t.string :vehicle_type
 
       t.string :entrance
-      t.string :slot_id
       t.datetime :time_in
       t.datetime :time_out
       t.integer :amount
-      t.string :status
+      t.string :status, default: "pending", null: false
 
       t.timestamps
     end
