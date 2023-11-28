@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :slots do
     collection do
       delete 'destroy_map'
+      get 'show_nearest'
     end
   end
 

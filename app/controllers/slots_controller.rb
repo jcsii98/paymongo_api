@@ -29,6 +29,34 @@ class SlotsController < ApplicationController
         end
     end
 
+    # test endpoint to check nearest available slot
+    def show_nearest
+        available_slots = Slot.where(status: 'available')
+
+        vehicle_type = params[:show_slot][:vehicle_type]
+
+        if vehicle_type === 'M'
+            filtered_slots = available_slots.reject { |slot| slot.slot_type === 'SP'}
+        elsif vehicle_type === 'L'
+            filtered_slots = available_slots.select { |slot| slot.slot_type === 'LP' }
+        else
+            filtered_slots = available_slots
+        end
+
+        
+        unless filtered_slots.all? { |slot| slot.distance_hash.key?(params[:show_slot][:entrance])}
+            render json: { error: "Entrance value does not exist" }
+        end
+
+        @nearest_slot = filtered_slots.min_by { |slot| slot.distance_hash[params[:show_slot][:entrance.to_s]] }
+        
+        if @nearest_slot
+            render 'slots/show_nearest'
+        else
+            render json: { error: "No slots found" }
+        end
+    end
+
     def destroy_map
         Slot.destroy_all
 
@@ -37,7 +65,7 @@ class SlotsController < ApplicationController
 
     private
 
-    # def slot_params(distance_hash, status)
-    #     { distance_hash: distance_hash, status: status }
-    # end
+    def show_slot_params
+        params.require(:show_slot).permit(:vehicle_type, :entrance)
+    end
 end

@@ -1,6 +1,6 @@
 class Ticket < ApplicationRecord
     belongs_to :slot, optional: true
-    validates :vehicle_plate, presence: true
+    validates :vehicle_plate, presence: true, uniqueness: { scope: :status, conditions: -> { where(status: 'pending')} }
     validates :vehicle_type, presence: true
     validates :entrance, presence: true
     validates :time_in, presence: true
@@ -22,7 +22,7 @@ class Ticket < ApplicationRecord
 
         # #  # # # # # non-overlapping ticket
         # first in dec 2, 00:00:00
-        # DateTime.new(2023, 12, 2, 0, 0, 0)
+        DateTime.new(2023, 12, 2, 0, 0, 0)
 
         # first out dec 2, 12:30:00
         # DateTime.new(2023, 12, 2, 12, 30, 0)
@@ -64,9 +64,7 @@ class Ticket < ApplicationRecord
         puts "Existing Ticket: #{existing_ticket.inspect}"
 
         if get_nearest_slot
-            if existing_ticket && existing_ticket.time_out >= (time_now - 1.hour)
-                puts "Time Now: #{time_now.inspect}, existing_ticket.time_out: #{existing_ticket.time_out.inspect}"
-                puts "Record exists within 1 hour. Using existing time_in value."
+            if existing_ticket && existing_ticket.time_out && existing_ticket.time_out >= (time_now - 1.hour)
                 self.time_in = existing_ticket.time_in
             else
                 set_time_in # set time_in = time.now
