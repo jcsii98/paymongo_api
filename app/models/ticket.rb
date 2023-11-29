@@ -20,37 +20,46 @@ class Ticket < ApplicationRecord
     def time_now
         # uncomment the desired timestamp before running post / patch
 
-        # #  # # # # # non-overlapping ticket
         # first in dec 2, 00:00:00
-        DateTime.new(2023, 12, 2, 0, 0, 0)
+        # DateTime.new(2023, 12, 2, 0, 0, 0)
 
-        # first out dec 2, 12:30:00
+        # first out dec 2, 12:30:00 13 hrs
         # DateTime.new(2023, 12, 2, 12, 30, 0)
 
+        # # # # # # # non-overlapping ticket
         # second in dec 2, 14:00:00
         # DateTime.new(2023, 12, 2, 14, 0, 0)
 
-        # second out dec 3, 00:00:00
+        # second out dec 3, 00:00:00 2 hrs
         # DateTime.new(2023, 12, 3, 0, 0, 0)
 
-        # third in dec 3, 02:00:00
-        # DateTime.new(2023, 12, 3, 2, 0, 0)
+        # # # # # # # overlapping ticket
+        # third in dec 3, 01:00:00
+        # DateTime.new(2023, 12, 3, 1, 0, 0)
 
-        # third out dec 3, 03:00:00
+        # third out dec 3, 03:00:00 2 hrs
         # DateTime.new(2023, 12, 3, 3, 0, 0)
 
-        # # # # # # # overlapping ticket
-        # first in dec 4, 00:00:00
+        # # # # # # # non-overlapping 24 hr ticket
+        # fourth in dec 4, 00:00:00
         # DateTime.new(2023, 12, 4, 0, 0, 0)
 
-        # first out dec 4, 12:30:00
-        # DateTime.new(2023, 12, 4, 12, 30, 0)
+        # fourth out dec 5, 00:00:00 24 hrs
+        # DateTime.new(2023, 12, 5, 0, 0, 0)
 
-        # second in dec 4, 13:00:00
-        # DateTime.new(2023, 12, 4, 13, 0, 0)
+        # # # # # # # overlap 27 hrs
+        # second in dec 5, 01:00:00
+        # DateTime.new(2023, 12, 5, 1, 0, 0)
         
-        # second out dec 4, 15:00:00
-        # DateTime.new(2023, 12, 4, 15, 0, 0)
+        # second out dec 6, 04:00:00
+        # DateTime.new(2023, 12, 6, 4, 0, 0)
+
+        # # # # # # # non-overlapping 27 hrs
+        # third in dec 6, 06:00:00
+        # DateTime.new(2023, 12, 6, 6, 0, 0)
+
+        # third out dec 7, 09:00:00
+        # DateTime.new(2023, 12, 7, 9, 0, 0)
     end
 
     # fetch existing ticket
@@ -193,3 +202,4 @@ class Ticket < ApplicationRecord
         self.amount = total_amount
     end
 end
+
